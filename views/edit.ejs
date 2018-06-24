@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Create New Event</title>
+	<link rel="stylesheet" type="text/css" href="/stylesheets/new.css">
+</head>
+<body>
+	<div class="container">
+		<h2>Edit "<%=event.title%>"</h2>
+		<form action="/events/<%=event._id%>?_method=PUT" method="POST">
+			<div class="input"><label> Title : <input type="text" name="title" value="<%=event.title%>"></label></div>
+			<div class="input"><label> Description : <textarea name="description" rows="3"><%=event.description%></textarea></div>
+			<div class="input"><label> Date : <input type="date" name="day"></label></div>
+			<div class="input"><label> Start Time : <input type="time" name="startTime" value="<%=event.startTime%>"></label></div>
+			<div class="input"><label> End Time : <input type="time" name="endTime" value="<%=event.endTime%>"></label></div>
+			<div class="input"><input type="submit"></div>
+		</form>
+	</div>
+
+
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+	<script type="text/javascript">
+		document.querySelector("input[type='date']").setAttribute("value",moment(<%=event.day%>,"DDDYYYY").format("YYYY-MM-DD"));
+	</script>
+	
+</body>
+</html>

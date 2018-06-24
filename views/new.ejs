@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Create New Event</title>
+	<link rel="stylesheet" type="text/css" href="/stylesheets/new.css">
+</head>
+<body>
+	<div class="container">
+		<h2>Add a new event</h2>
+		<form action="/events/new" method="POST">
+			<div class="input"><label> Title : <input type="text" name="title"></label></div>
+			<div class="input"><label> Description : <textarea name="description" rows="3"></textarea></div>
+			<div class="input"><label> Date : <input type="date" name="day"></label></div>
+			<div class="input"><label> Start Time : <input type="time" name="startTime"></label></div>
+			<div class="input"><label> End Time : <input type="time" name="endTime"></label></div>
+			<div class="input"><input type="submit"></div>
+		</form>
+	</div>
+</body>
+</html>

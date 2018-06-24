@@ -1,0 +1,48 @@
+.container{
+	background-color: white;
+	width: 80%;
+	border-radius: 30px;
+	padding: 10px;
+	margin: 5% auto;
+}
+body{
+background: steelblue
+}
+h1{
+	text-align: center;
+	font-size: 2.5rem;
+	color: white;
+}
+.eventdiv{
+	padding: 10px;
+	margin: 5px auto;
+
+
+	font-size: 1.5rem;
+}
+
+hr{
+	width:95%;
+}
+
+button{
+	border: none;
+	outline: none;
+	color: white;
+	font-size: 0.7em;
+	border-radius: 10px;
+	padding: 10px;
+	background: #FA3737;
+}
+
+form{
+	display: inline;
+}
+.editbtn{
+	border-radius: 10px;
+	padding: 8px;
+	color: white;
+	background: #49B020;
+	text-decoration: none;
+	
+}
