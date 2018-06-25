@@ -3,8 +3,31 @@
 <head>
 	<title>Create New Event</title>
 	<link rel="stylesheet" type="text/css" href="/stylesheets/new.css">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/nav.css">
 </head>
 <body>
+
+		<!-- navbar -->
+	<div class="topnav">
+  		<a class="active" href="/">Home</a>
+  		<a href="">Meeting invites</a>
+  		<a href="">Contact</a>
+  		<div class="nav-right">
+  			<% if(currentUser){ %>
+  			  	<a href="">Signed in as <%=currentUser.username%></a>
+  				<a href="/logout">Logout</a>
+  			<% }else{ %>
+  				<a href="/login">Login</a>
+  				<a href="/register">SignUp</a>
+  			<% } %>
+
+  			
+  			
+  		</div>
+  		
+	</div>
+
+	
 	<div class="container">
 		<h2>Edit "<%=event.title%>"</h2>
 		<form action="/events/<%=event._id%>?_method=PUT" method="POST">

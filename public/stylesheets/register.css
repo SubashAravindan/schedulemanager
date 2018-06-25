@@ -1,0 +1,66 @@
+.container{
+	width: 40%;
+	min-width: 300px;
+	margin: 50px auto;
+}
+
+input{
+	display: block;
+	margin: 20px 0;
+	border: 1px solid lightblue;
+	border-radius: 7px;
+	padding: 10px;
+	width: 100%;
+	font-size: 1.5em;
+}
+
+h1{
+	font-size: 2.1em;
+	text-align: center;
+	margin-bottom: 30px;
+}
+
+form{
+	border: 3px solid steelblue;
+	border-radius: 20px;
+	padding: 40px;
+}
+
+form button{
+	margin: 5px auto;
+	border-radius: 5px;
+	background: steelblue;
+	border: none;
+	outline: none;
+	padding: 7px;
+	color: white;
+	font-size: 1.5em;
+}
+
+.hidden{
+	display: none;
+}
+
+#OKDiv{	
+	background: lightgreen;
+	color: darkgreen;
+	border: 1px solid darkgreen
+}
+
+#NotOKDiv{
+	background: orange;
+	color: red;
+	border: 1px solid red;
+
+}
+
+.messagediv{
+	margin-top: 50px;
+	border-radius: 5px;
+    padding: 5px;
+	font-size: 1em;
+}
+
+form button:disabled {
+	opacity: 0.5;
+}

@@ -3,8 +3,30 @@
 <head>
 	<title>Appointments</title>
 	<link rel="stylesheet" type="text/css" href="/stylesheets/timeline.css">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/nav.css">
 </head>
 <body>
+		<!-- navbar -->
+	<div class="topnav">
+  		<a class="active" href="/">Home</a>
+  		<a href="">Meeting invites</a>
+  		<a href="">Contact</a>
+  		<div class="nav-right">
+  			<% if(currentUser){ %>
+  			  	<a href="">Signed in as <%=currentUser.username%></a>
+  				<a href="/logout">Logout</a>
+  			<% }else{ %>
+  				<a href="/login">Login</a>
+  				<a href="/register">SignUp</a>
+  			<% } %>
+
+  			
+  			
+  		</div>
+  		
+	</div>
+
+	
 	<h1>Events on <%=date.format("Do MMMM YYYY")%></h1>
 	<div class="container">
 

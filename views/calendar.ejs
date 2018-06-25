@@ -3,6 +3,8 @@
 <head>
 	<title>Calendar</title>
 	<link rel="stylesheet" type="text/css" href="/stylesheets/calendar.css">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/nav.css">
+
 </head>
 <body>
 	<!-- navbar -->
@@ -11,16 +13,24 @@
   		<a href="">Meeting invites</a>
   		<a href="">Contact</a>
   		<div class="nav-right">
-  			<a href="/login">Login</a>
-  			<a href="/logout">Logout</a>
-  			<a href="/register">SignUp</a>
+  			<% if(currentUser){ %>
+  			  	<a href="">Signed in as <%=currentUser.username%></a>
+  				<a href="/logout">Logout</a>
+  			<% }else{ %>
+  				<a href="/login">Login</a>
+  				<a href="/register">SignUp</a>
+  			<% } %>
+
+  			
+  			
   		</div>
   		
 	</div>
 
 
-	<div><a href="events/new">Add new event</a></div>
+	<div id="newBtnDiv"><a href="events/new" id="newBtn">Add new event</a></div>
 	<div class="container">
+
 		<div id="topDiv"><button id="prevMonth">Previous month</button><h1 id="monthSpan"></h1><button id="nextMonth">Next month</button></div>
 	</div>
 

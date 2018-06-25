@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Sign Up</title>
+	<link rel="stylesheet" type="text/css" href="/stylesheets/register.css">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/nav.css">
+</head>
+<body>
+		<!-- navbar -->
+	<div class="topnav">
+  		<a class="active" href="/">Home</a>
+  		<a href="">Meeting invites</a>
+  		<a href="">Contact</a>
+  		<div class="nav-right">
+  			<% if(currentUser){ %>
+  			  	<a href="">Signed in as <%=currentUser.username%></a>
+  				<a href="/logout">Logout</a>
+  			<% }else{ %>
+  				<a href="/login">Login</a>
+  				<a href="/register">SignUp</a>
+  			<% } %>
+
+  			
+  			
+  		</div>
+  		
+	</div>
+
+	<div class="container">
+		<h1>Sign Up for a new account</h1>
+		<form method="POST" action="/register">
+			<input type="text" name="username" placeholder="username" id="usernameInput" required="true">
+            <div class="messagediv hidden" id="OKDiv">This username is available :)</div>
+            <div class="messagediv hidden" id="NotOKDiv">This username already exists. Try another</div>
+			<input type="password" name="password" placeholder="password" required="true">
+			<button>Sign Up</button>
+		</form>
+	</div>
+
+<script type="text/javascript">
+    uInput=document.getElementById('usernameInput');
+    OKDiv=document.getElementById("OKDiv");
+    NotOKDiv=document.getElementById("NotOKDiv");
+    subBtn=document.querySelector("form button");
+
+    uInput.addEventListener("input",function(){
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange=function(){
+            if (this.readyState==4&&this.status==200) {
+                if(xhttp.responseText==="0"){
+                    OKDiv.classList.remove("hidden")
+                    NotOKDiv.classList.add("hidden")
+                    subBtn.disabled=false;
+                }
+                else{
+                    OKDiv.classList.add("hidden")
+                    NotOKDiv.classList.remove("hidden")
+                    subBtn.disabled=true;                    
+                }
+            }
+        };
+        xhttp.open("GET","/usernameCheck?input="+uInput.value);
+        xhttp.send();
+    }) 
+</script> 
+
+
+
+</body>
+</html>
