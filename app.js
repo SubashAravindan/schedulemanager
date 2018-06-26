@@ -3,10 +3,13 @@ var   express  = require("express"),
    bodyParser  = require("body-parser"),
  	   moment  = require("moment"),
      mongoose  = require("mongoose"),
+        Invite = require("./models/invites.js")
          User  = require("./models/user.js"),
    	    Event  = require("./models/event.js"),
 methodOverride = require("method-override"),
       passport = require("passport"),
+  randomString = require("randomstring"),
+      text2png = require("text2png"),
  LocalStrategy = require("passport-local");
 
 
@@ -71,7 +74,15 @@ app.delete("/events/:id",isLoggedIn,isAuthorised,(req,res)=>{
 			console.log(err)
 		} else {
 			console.log(event);
-			res.redirect("/day/"+event.day);
+			Invite.deleteMany({invitedEvent:req.params.id},(err,inv)=>{
+				if (err) {
+					console.log(err)
+				} else {
+					console.log(inv);
+					res.redirect("/day/"+event.day);
+				}
+			})
+			
 		}
 	})
 })
@@ -98,26 +109,100 @@ app.get("/events/:id/edit",isLoggedIn,isAuthorised,(req,res)=>{
 	})
 })
 
-//SHOW DATE
+//SHOW EVENTS ON DATE
 app.get("/day/:date",isLoggedIn,(req,res)=>{
 	m=moment(req.params.date,"DDDYYYY");
-	Event.find({day:req.params.date},(err,events)=>{
+	User.findById(req.user.id).populate("events").exec(function(err,foundUser){
 		if (err) {
 			console.log(err);
 		} else {
-			events.sort((a,b)=>(a.startTime-b.startTime));
-			res.render("timeline",{date:m,events:events});
+			eventList=[];
+			if(foundUser.events.length){
+				foundUser.events.forEach(ev=>{
+					if (ev.day===req.params.date) {
+						eventList.push(ev);
+					}
+				})	
+			}
+
+			eventList.sort((a,b)=>(a.startTime-b.startTime));
+			res.render("timeline",{date:m,events:eventList});
 		}
 	})
 	
 })
 
+//CREATE INVITE 
 
+app.post("/invite",isLoggedIn,(req,res)=>{
+	User.find({username:req.body.to},(err,toUser)=>{
+		if (toUser.length) {
+			console.log(toUser);
+			Invite.create({from:req.user.id,to:toUser[0]._id,invitedEvent:req.body.id,status:0},(err,invite)=>{
+				if (err) {
+					console.log(err)
+				} else {
+					console.log(invite)
+					res.send("1");
+				}
+			})
+		}else{
+			res.send("0")
+		}
+	})
+})
+
+//SHOW MEETING INVITES
+app.get("/invites",isLoggedIn,(req,res)=>{
+	Invite.find({to:req.user.id,status:0}).populate("invitedEvent").exec((err,invites)=>{
+		if (err) {
+			console.log(err)
+		} else {
+			res.render("invites",{invites:invites});
+		}
+	})
+
+})
+
+app.get("/invites/:id/:response",isLoggedIn,(req,res)=>{
+	Invite.findById(req.params.id).populate("invitedEvent").exec(function(err,invite){
+		if (req.params.response==1) {
+			if (err) {
+				console.log(err);
+			} else {
+				User.findByIdAndUpdate(req.user.id,{$push:{events:invite.invitedEvent}},(err,user)=>{
+					if (err) {
+						console.log(err)
+					} else {
+						invite.status=1;
+						invite.save();
+					}
+				})
+			}		
+		} else {
+			invite.status=-1;
+			invite.save();
+		}
+	})
+	res.redirect("/invites")
+})
+
+app.get("/invitesupdate",isLoggedIn,(req,res)=>{
+	Invite.find({to:req.query.user,status:0}).populate("invitedEvent").exec((err,invites)=>{
+		if (err) {
+			console.log(err)
+		} else {
+			res.send(JSON.stringify(invites));
+		}
+	})
+})
 //===================================================================
 //========================AUTH ROUTES================================
 //===================================================================
 app.get("/register",(req,res)=>{
-	res.render("register");
+	captchaString=randomString.generate(7);
+	captchaSrc=text2png(captchaString,{bgColor:"grey",padding:20,textColor:"black",output:"dataURL"});
+	res.render("register",{captchaSrc:captchaSrc});
 })
 
 app.get("/usernameCheck",(req,res)=>{
@@ -135,6 +220,9 @@ app.get("/usernameCheck",(req,res)=>{
 })
 
 app.post("/register",(req,res)=>{
+	if (req.body.captcha!=captchaString) {
+		return res.send("Your captcha was wrong !<a href = '/register'>Sign Up</a> again")
+	}
 	User.register(new User({username:req.body.username}),req.body.password,function(err,user){
 		if (err) {
 			console.log(err)

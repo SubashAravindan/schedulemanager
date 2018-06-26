@@ -1,14 +1,19 @@
 html,body{
 	width: 100%;
 	height: 100%;
+	background: #F2994A;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #F2C94C, #F2994A);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #F2C94C, #F2994A); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
 }
 
 #newBtn{
+
 	color: black;
 	text-decoration: none;
 	background: #277D0A;
 	color: white;
-	padding: 5px;
+	padding: 10px;
 	box-sizing: border-box;
 	font-size: 1.8em;
 	border-radius: 10px;
@@ -22,18 +27,24 @@ html,body{
 }
 
 .container{
+	min-width: 600px;
 	width: 80%;
 	margin: 20px auto;
 	height: 90%;
-	border:1px solid red;
+/*	border:1px solid red;*/
 }
 
 .thisMonthDateBox{
-	border:1px solid red;
+	font-size: 2em;
+	border:1px solid blue;
+	background: #C9D6FF;  /* fallback for old browsers */
+	background: -webkit-linear-gradient(to left, #E2E2E2, #C9D6FF);  /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to left, #E2E2E2, #C9D6FF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
 }
 
 .otherMonthDateBox{
-	border:1px solid blue;
+/*	border:1px solid blue;*/
 }
 
 .otherMonthDateBox,.thisMonthDateBox{
@@ -47,22 +58,35 @@ html,body{
 }
 
 #topDiv{
+	border-radius: 10px;
+	color: white;
 	text-align: center;
-	background: gold;
+	background: steelblue;
 	width: 100%;
-	height: 6%;
+	height: 10%;
 }
 #monthSpan{
-
+	font-size: 2.8rem;
+	text-decoration: underline;
 	display: inline;
 }
 
 #prevMonth{
+	color: white;
+	font-size: 2em;
+	background: transparent;
+	border: none;
+	outline: none;
 	float:left;
 	height: 100%;
 	display: inline;
 }
 #nextMonth{
+	color: white;
+	font-size: 2em;
+	background: transparent;
+	border: none;
+	outline: none;
 	float: right;
 	height: 100%;
 	display: inline;

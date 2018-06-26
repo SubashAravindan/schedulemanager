@@ -9,5 +9,5 @@ var eventSchema= new mongoose.Schema({
 	startTime:String,
 	endTime: String
 }) 
-
+ 
 module.exports=mongoose.model("event",eventSchema)

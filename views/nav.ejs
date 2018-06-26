@@ -1,0 +1,15 @@
+		<!-- navbar -->
+	<div class="topnav">
+  		<a class="active" href="/">Home</a>
+      <a href="/events/new">Create Event</a>
+  		<a href="/invites">Meeting invites</a>
+  		<div class="nav-right">
+  			<% if(currentUser){ %>
+  			  	<a href="">Signed in as <%=currentUser.username%></a>
+  				<a href="/logout">Logout</a>
+  			<% }else{ %>
+  				<a href="/login">Login</a>
+  				<a href="/register">SignUp</a>
+  			<% } %>
+  		</div>
+  	</div>

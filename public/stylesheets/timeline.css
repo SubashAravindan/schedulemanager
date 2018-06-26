@@ -32,7 +32,25 @@ button{
 	font-size: 0.7em;
 	border-radius: 10px;
 	padding: 10px;
-	background: #FA3737;
+}
+
+.deleteBtn{
+	background: #FA3737;	
+}
+
+.collabBtn{
+	background-color: steelblue;
+}
+
+.sendBtn{
+	background-color: green;
+}
+
+.usernameInput{
+	border-radius: 5px;
+    border: 2px solid lightblue;
+    padding: 4px;
+    outline: none;
 }
 
 form{
@@ -46,3 +64,32 @@ form{
 	text-decoration: none;
 	
 }
+
+.hidden{
+	display: none;
+}
+
+
+
+.successMsg{ 
+
+	font-size: 0.7em;
+	margin: 5px 0;
+    border: 1px solid darkgreen;
+    background: lightgreen;
+    color: darkgreen;
+    padding: 6px;
+    width: fit-content;
+    border-radius: 10px;
+}
+.failureMsg{  	
+	font-size: 0.7em;
+	margin: 5px 0;
+    border: 1px solid red;
+    background: orange;
+    color: red;
+    padding: 6px;
+    width: fit-content;
+    border-radius: 10px;
+}
+

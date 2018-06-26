@@ -7,7 +7,7 @@ var userSchema = new mongoose.Schema({
 	events:[
 		{
 			type:mongoose.Schema.Types.ObjectId,
-			ref:"Event"
+			ref:"event"
 		}
 	]
 });

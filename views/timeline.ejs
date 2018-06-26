@@ -6,25 +6,8 @@
 	<link rel="stylesheet" type="text/css" href="/stylesheets/nav.css">
 </head>
 <body>
-		<!-- navbar -->
-	<div class="topnav">
-  		<a class="active" href="/">Home</a>
-  		<a href="">Meeting invites</a>
-  		<a href="">Contact</a>
-  		<div class="nav-right">
-  			<% if(currentUser){ %>
-  			  	<a href="">Signed in as <%=currentUser.username%></a>
-  				<a href="/logout">Logout</a>
-  			<% }else{ %>
-  				<a href="/login">Login</a>
-  				<a href="/register">SignUp</a>
-  			<% } %>
+	<%include nav%>
 
-  			
-  			
-  		</div>
-  		
-	</div>
 
 	
 	<h1>Events on <%=date.format("Do MMMM YYYY")%></h1>
@@ -38,8 +21,16 @@
 				<div>
 					<a href="/events/<%=event._id%>/edit" class="editbtn">Edit</a>
 					<form action="/events/<%=event._id%>?_method=DELETE" method="POST">
-						<button>Delete event</button>
+						<button class="deleteBtn">Delete event</button>
 					</form>
+					<div class="successMsg hidden">Invite sent</div>
+					<div class="failureMsg hidden">No such user !</div>
+					<button class="collabBtn">Invite another user</button>
+					<div class="collabDiv hidden">
+							<input type="text" name="username" required="true" placeholder="Enter Username" class="usernameInput">
+							<input type="text" name="eventId" class="hidden" value="<%=event._id%>">
+							<button class="sendBtn">Send!</button>
+					</div>
 				</div>
 			</div>
 			<hr>
@@ -50,5 +41,56 @@
 	</div>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+	<script type="text/javascript">
+		collabBtn=document.querySelectorAll('.collabBtn');
+		sendBtn=document.querySelectorAll('.sendBtn');
+		// collabDiv=document.getElementById('collabDiv');
+		// usernameInput=document.getElementById('usernameInput');
+		// sendBtn=document.getElementById('sendBtn');
+		collabBtn.forEach(function(cb){
+			cb.addEventListener("click",function(){
+				this.classList.add("hidden");
+				this.nextElementSibling.classList.remove("hidden")
+			})			
+		})
+
+		sendBtn.forEach(function(sb){
+		sb.addEventListener("click",function(){
+			thi=this
+			var xhttp= new XMLHttpRequest();
+			xhttp.onreadystatechange=function(){
+            	if (this.readyState==4&&this.status==200) {
+                	if(xhttp.responseText==="0"){
+                		flashErr(thi);
+                	}else if(xhttp.responseText==="1"){
+                		flashSuccess(thi);
+                		thi.parentElement.classList.add("hidden");
+                		thi.parentElement.previousElementSibling.classList.remove("hidden");
+                	}
+            	}	
+        	}
+
+        	xhttp.open("POST","/invite");
+        	xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");	
+        	xhttp.send("from=<%=currentUser.id%>&to="+thi.previousElementSibling.previousElementSibling.value+"&id="+thi.previousElementSibling.value);
+		})
+		})
+		function flashSuccess(thi){
+			elem=thi.parentElement.previousElementSibling.previousElementSibling.previousElementSibling;	
+			elem.classList.remove("hidden")
+			t=setTimeout(function() {
+				elem.classList.add("hidden")
+				clearTimeout(t);
+			}, 2000);
+		}
+		function flashErr(thi){
+			elem2=thi.parentElement.previousElementSibling.previousElementSibling
+			elem2.classList.remove("hidden")
+			u=setTimeout(function() {
+				elem2.classList.add("hidden")
+				clearTimeout(u);
+			}, 2000);
+		}
+	</script>
 </body>
 </html>

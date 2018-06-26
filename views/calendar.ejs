@@ -2,36 +2,18 @@
 <html>
 <head>
 	<title>Calendar</title>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="/stylesheets/calendar.css">
 	<link rel="stylesheet" type="text/css" href="/stylesheets/nav.css">
 
 </head>
 <body>
-	<!-- navbar -->
-	<div class="topnav">
-  		<a class="active" href="/">Home</a>
-  		<a href="">Meeting invites</a>
-  		<a href="">Contact</a>
-  		<div class="nav-right">
-  			<% if(currentUser){ %>
-  			  	<a href="">Signed in as <%=currentUser.username%></a>
-  				<a href="/logout">Logout</a>
-  			<% }else{ %>
-  				<a href="/login">Login</a>
-  				<a href="/register">SignUp</a>
-  			<% } %>
-
-  			
-  			
-  		</div>
-  		
-	</div>
-
+    <%include nav%>
 
 	<div id="newBtnDiv"><a href="events/new" id="newBtn">Add new event</a></div>
 	<div class="container">
 
-		<div id="topDiv"><button id="prevMonth">Previous month</button><h1 id="monthSpan"></h1><button id="nextMonth">Next month</button></div>
+		<div id="topDiv"><button id="prevMonth"><i class="fas fa-arrow-left"></i></button><h1 id="monthSpan"></h1><button id="nextMonth"><i class="fas fa-arrow-right"></i></button></div>
 	</div>
 
 

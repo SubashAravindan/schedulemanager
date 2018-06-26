@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Meeting invites</title>
+	<link rel="stylesheet" type="text/css" href="stylesheets/invites.css">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/nav.css">
+</head>
+<body>
+	<%include nav%>
+
+<h1>Waiting Invites </h1>
+<h3>(no need to refesh, invites are being auto checked)</h3>
+	<div class="container">
+
+	</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+	<script type="text/javascript">
+	container=document.querySelector(".container");
+
+	function getHTMLString(invite){
+		var htmlString='';
+		htmlString+='<div class="eventdiv">';
+		htmlString+='<div><strong>Title :</strong> '+invite.invitedEvent.title+'</div>'	;
+		htmlString+='<div><strong>Description :</strong>;'+invite.invitedEvent.description+'</div>';
+		htmlString+='<p><strong>Date : </strong>'+moment(invite.invitedEvent.day,'DDDDYYYY').format("DD/MM/YY")+'</p>';
+		htmlString+='<div><strong>From :</strong>'+invite.invitedEvent.startTime+'<strong>To :</strong>'+invite.invitedEvent.endTime+'</div>';
+		htmlString+='<div><a href="/invites/'+invite._id+'/1" class="acceptBtn">Accept</a><a href="/invites/'+invite._id+'/0" class="rejectBtn">Reject </a></div>';
+		htmlString+='</div>';
+		htmlString+='<hr>';
+		return htmlString;		
+	}
+	function dispInvites(){
+		container.innerHTML='';
+		invitesArray.forEach(invite=>{
+			container.innerHTML+=getHTMLString(invite);
+		})
+	}
+
+	setInterval(function(){
+		var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange=function(){
+        	if(this.readyState==4&&this.status==200){
+        		console.log("hi")
+        		invitesArray=JSON.parse(xhttp.responseText);
+        		console.log(xhttp.responseText);
+        		dispInvites();
+        	}
+      	}
+        xhttp.open("GET","/invitesupdate?user="+"<%=currentUser.id%>");
+        xhttp.send();
+    },1000);
+	</script>
+</body>
+</html>

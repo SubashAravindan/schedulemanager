@@ -6,25 +6,7 @@
 	<link rel="stylesheet" type="text/css" href="/stylesheets/nav.css">
 </head>
 <body>
-		<!-- navbar -->
-	<div class="topnav">
-  		<a class="active" href="/">Home</a>
-  		<a href="">Meeting invites</a>
-  		<a href="">Contact</a>
-  		<div class="nav-right">
-  			<% if(currentUser){ %>
-  			  	<a href="">Signed in as <%=currentUser.username%></a>
-  				<a href="/logout">Logout</a>
-  			<% }else{ %>
-  				<a href="/login">Login</a>
-  				<a href="/register">SignUp</a>
-  			<% } %>
-
-  			
-  			
-  		</div>
-  		
-	</div>
+	<%include nav%>
 	
 	<div class="container">
 		<h2>Add a new event</h2>
@@ -36,6 +18,7 @@
 			<div class="input"><label> End Time : <input type="time" name="endTime"></label></div>
 			<div class="input"><input type="submit"></div>
 		</form>
+	
 	</div>
 </body>
 </html>
